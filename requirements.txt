@@ -1,4 +1,4 @@
-Django==1.11.21
+Django==1.11.28
 django-geoposition==0.3.0
 django-geoposition-2==0.3.6
 Pillow==6.0.0
