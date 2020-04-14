@@ -1,0 +1,207 @@
+{% extends "base.html" %}{% load staticfiles %}{% block base %}
+<div id="page" class="hfeed site woocommerce-checkout">
+   <header id="masthead" class="site-header header-v1" style="background-image: none; ">
+      <div class="col-full">
+         <a class="skip-link screen-reader-text" href="#site-navigation">Skip to navigation</a>
+         <a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+         <div class="header-wrap">
+            <div class="site-branding">
+               <a href="/" class="custom-logo-link" rel="home">
+                    {% include "logo.html" %}
+               </a>
+            </div>
+            <nav id="site-navigation" class="main-navigation" aria-label="Primary Navigation">
+               <button class="menu-toggle" aria-controls="site-navigation" aria-expanded="false"><span class="close-icon"><i class="po po-close-delete"></i></span><span class="menu-icon"><i class="po po-menu-icon"></i></span><span class=" screen-reader-text">Menu</span></button>
+               <div class="primary-navigation">
+                  <ul id="menu-main-menu" class="menu nav-menu" aria-expanded="false">
+                     <li class="menu-item active"><a href="/">INICIAL</a></li>
+                     <li class="menu-item"><a href="/">CARDÁPIO</a></li>
+                     <li class="menu-item"><a href="/">GALERIA</a></li>
+                     <li class="menu-item"><a href="/">CONTATO</a></li>
+                  </ul>
+               </div>
+               <div class="handheld-navigation">
+                  <span class="phm-close">Fechar</span>
+                  <ul class="menu">
+                     <li class="menu-item"><a href="shop-grid-3-column.html"><i class="po po-pizza"></i>PIZZAS</a></li>
+                     <li class="menu-item"><a href="shop-grid-3-column.html"><i class="po po-burger"></i>HAMBÚRGUES</a></li>
+                     <li class="menu-item"><a href="shop-grid-3-column.html"><i class="po po-fries"></i>BATATAS</a></li>
+                     <li class="menu-item"><a href="shop-grid-3-column.html"><i class="po po-drinks"></i>BEBIDAS</a></li>
+                  </ul>
+               </div>
+            </nav>
+            <!-- #site-navigation -->
+            <div class="header-info-wrapper">
+               <div class="header-phone-numbers">
+                  <span class="intro-text">Ligue e faça o pedido</span>
+                  <select class="select-city-phone-numbers" name="city-phone-numbers" id="city-phone-numbers">
+                     <option value="(99) 99999-9999">Whatsapp</option>
+                     <option value="(00) 00000-0000">Claro</option>
+                     <option value="(11) 11111-1111">Tim</option>
+                     <option value="(22) 22222-2222">Vivo</option>
+                  </select>
+                  <span id="city-phone-number-label" class="phone-number">(99) 99999-9999</span>
+               </div>
+               <ul class="site-header-cart-v2 menu">
+                  <li class="cart-content ">
+                     <a href="/checkout/" title="{{object.title|upper}}">
+                     <i class="po po-scooter"></i>
+                     <span>Go to Your Cart</span>
+                     </a>
+                     <ul class="sub-menu">
+                        <li>
+                           <a href="/checkout/" title="{{object.title|upper}}">
+                           <span class="count">{{ order.items.count }} items</span> <span class="amount">R${{ order.get_total }}</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <div class="pizzaro-secondary-navigation">
+            <nav class="secondary-navigation" aria-label="Secondary Navigation">
+               <ul class="menu">
+                  <li class="menu-item"><a href=""><i class="po po-pizza"></i>PIZZAS</a></li>
+                  <li class="menu-item"><a href=""><i class="po po-burger"></i>HAMBÚRGUES</a></li>
+                  <li class="menu-item"><a href=""><i class="po po-fries"></i>BATATAS</a></li>
+                  <li class="menu-item"><a href=""><i class="po po-drinks"></i>BEBIDAS</a></li>
+               </ul>
+            </nav>
+         </div>
+      </div>
+   </header>
+         <div id="content" class="site-content" tabindex="-1" >
+            <div class="col-full">
+               <div class="pizzaro-breadcrumb">
+                  <nav class="woocommerce-breadcrumb">
+                     <a href="index.html">Home</a>
+                     <span class="delimiter"><i class="po po-arrow-right-slider"></i></span>
+                     <a href="checkout.html">Checkout</a>
+                     <span class="delimiter"><i class="po po-arrow-right-slider"></i></span>Order Received
+                  </nav>
+               </div>
+               <div id="primary" class="content-area">
+                  <main id="main" class="site-main" >
+                     <div class="pizzaro-order-steps">
+                        <ul>
+                           <li class="cart">
+                              <span class="step">1</span>Shopping Cart
+                           </li>
+                           <li class="checkout">
+                              <span class="step">2</span>Checkout
+                           </li>
+                           <li class="complete">
+                              <span class="step">3</span>Order Complete
+                           </li>
+                        </ul>
+                     </div>
+                     <div id="post-9" class="post-9 page type-page status-publish hentry">
+                        <header class="entry-header">
+                           <h1 class="entry-title">Order Received</h1>
+                        </header>
+                        <!-- .entry-header -->
+                        <div class="entry-content">
+                           <div class="woocommerce">
+                              <p class="woocommerce-thankyou-order-received">Thank you. Your order has been received.</p>
+                              <ul class="woocommerce-thankyou-order-details order_details">
+                                 <li class="order">Order Number:<strong>645</strong></li>
+                                 <li class="date">Date:<strong>February 2, 2017</strong></li>
+                                 <li class="total">Total:<strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>25.90</span></strong></li>
+                                 <li class="method">Payment Method:<strong>Direct Bank Transfer</strong></li>
+                              </ul>
+                              <div class="clear"></div>
+                              <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                              <h2>Order Details</h2>
+                              <table class="shop_table order_details">
+                                 <thead>
+                                    <tr>
+                                       <th class="product-name">Product</th>
+                                       <th class="product-total">Total</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <tr class="order_item">
+                                       <td class="product-name">
+                                          <a href="single-product-v1.html">Country Burger</a> <strong class="product-quantity">× 1</strong>
+                                          <dl class="variation">
+                                             <dt class="variation-PickSize362590"><span id="1">Pick Size</span> (<span class="woocommerce Price amount amount"><span class="woocommerce Price currencySymbol">$</span>25.90</span>):</dt>
+                                             <dd class="variation-PickSize362590">
+                                                <p>29  cm</p>
+                                             </dd>
+                                          </dl>
+                                       </td>
+                                       <td class="product-total"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>25.90</span>  </td>
+                                    </tr>
+                                 </tbody>
+                                 <tfoot>
+                                    <tr>
+                                       <th scope="row">Subtotal:</th>
+                                       <td><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>25.90</span></td>
+                                    </tr>
+                                    <tr>
+                                       <th scope="row">Payment Method:</th>
+                                       <td>Direct Bank Transfer</td>
+                                    </tr>
+                                    <tr>
+                                       <th scope="row">Total:</th>
+                                       <td><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">$</span>25.90</span></td>
+                                    </tr>
+                                 </tfoot>
+                              </table>
+                              <header>
+                                 <h2>Customer Details</h2>
+                              </header>
+                              <table class="shop_table customer_details">
+                                 <tbody>
+                                    <tr>
+                                       <th>Email:</th>
+                                       <td>anas@transvelo.com</td>
+                                    </tr>
+                                    <tr>
+                                       <th>Telephone:</th>
+                                       <td>9547399295</td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                              <header class="title">
+                                 <h3>Billing Address</h3>
+                              </header>
+                              <address>Transvelo<br>Mohamed Anas<br>Transvelo<br>No 27 Maraicoir Street, Mannady<br>chennai - 600001<br>Tamil Nadu, India</address>
+                           </div>
+                        </div>
+                        <!-- .entry-content -->
+                     </div>
+                     <!-- #post-## -->
+                  </main>
+                  <!-- #main -->
+               </div>
+            </div>
+            <!-- .col-full -->
+         </div>
+         <!-- #content -->
+         <div class="footer-v1-static-content">
+            <div class="kc-css-994088 kc_row">
+               <div class="kc-row-container  kc-container">
+                  <div class="kc-wrap-columns">
+                     <div class="kc-css-194963 kc_col-sm-12 kc_column kc_col-sm-12">
+                        <div class="stretch-full-width kc-col-container">
+                           <div class="kc-css-126640 kc_shortcode kc_wrap_instagram  kc_ins_col_6">
+                              <ul class="row">
+                                  <li class="col-md-2 col-sm-2 col-lg-2 col-xs-4"><a href="https://www.instagram.com/p/BO4Gyf2hTkr/" target="_blank"><img alt="" src="assets/images/footer/1.jpg"></a></li>
+                                  <li class="col-md-2 col-sm-2 col-lg-2 col-xs-4"><a href="https://www.instagram.com/p/BO4Gtf1BCmM/" target="_blank"><img alt="" src="assets/images/footer/2.jpg"></a></li>
+                                  <li class="col-md-2 col-sm-2 col-lg-2 col-xs-4"><a href="https://www.instagram.com/p/BO4GnvhBqNt/" target="_blank"><img alt="" src="assets/images/footer/3.jpg"></a></li>
+                                  <li class="col-md-2 col-sm-2 col-lg-2 col-xs-4"><a href="https://www.instagram.com/p/BO4GhsuhQE4/" target="_blank"><img alt="" src="assets/images/footer/4.jpg"></a></li>
+                                  <li class="col-md-2 col-sm-2 col-lg-2 col-xs-4"><a href="https://www.instagram.com/p/BO4F_ZbBuxI/" target="_blank"><img alt="" src="assets/images/footer/5.jpg"></a></li>
+                                  <li class="col-md-2 col-sm-2 col-lg-2 col-xs-4"><a href="https://www.instagram.com/p/BO4F8fLhgkp/" target="_blank"><img alt="" src="assets/images/footer/6.jpg"></a></li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+{% include "footer.html" %}
+</div>
+{% endblock %}

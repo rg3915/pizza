@@ -1,0 +1,129 @@
+{% extends "base.html" %}{% load staticfiles %}{% block base %}
+<div class="containter">
+<div class="col-md-10">
+                     <div id="post-8" class="post-8 page type-page status-publish hentry">
+                        <div class="entry-content">
+                           <div class="woocommerce">
+                             
+                                 <table class="shop_table shop_table_responsive cart" >
+                                    <thead>
+                                       <tr>
+                                          <th class="product-remove">&nbsp;</th>
+                                          <th class="product-thumbnail">&nbsp;</th>
+                                          <th class="product-name">PRODUTO</th>
+                                          <th class="product-price">VALOR</th>
+                                          <th class="product-quantity">QUANTIDADE</th>
+                                          <th class="product-subtotal">TOTAL</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                      {% for order_item in object.items.all %}
+                                       <tr class="cart_item">
+                                          <td class="product-remove">
+                                             <a href="{% url 'core:remove-from-cart' order_item.item.slug %}" class="remove" >&times;</a>
+                                          </td>
+                                          <td class="product-thumbnail">
+                                             <a href="#">
+                                             <img width="180" height="180" src="{{ order_item.item.image.url }}" alt=""/>
+                                             </a>
+                                          </td>
+                                          <td class="product-name" data-title="PRODUTO">
+                                             <a href="#">{{ order_item.item.title }}</a>
+                                             <dl class="variation">
+                                                <dt class="variation-Baseprice">TAMANHO:</dt>
+                                                {{order_item.item.tamanho.nome|upper}} 
+                                                
+                                                <dd class="variation-PickSizespanclasswoocommerce-Price-amountamountspanclasswoocommerce-Price-currencySymbol36span2590span">
+                                                  
+                                                  <p>
+                                                   <strong>Adicionais: </strong>
+                                                   {% for itens in order_item.item.picked.all %}     
+                                                    {{itens.adicional_nome }},
+                                                   
+                                                   {% endfor %}
+
+                                                    </p>
+                                                </dd>
+
+                                             </dl>
+
+                                          </td>
+                                          <td class="product-price" data-title="VALOR">
+                                             <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>{{ order_item.item.price }}</span>
+                                          </td>
+                                          <td class="product-quantity" data-title="QUANTIDADE">
+                                             <div class="qty-btn">
+                                                <label>Quatidade</label>
+                                                <div class="quantity">
+                                                   <a href="{% url 'core:remove-single-item-from-cart' order_item.item.slug %}"><i class="fa fa-minus mr-2"></i></a>
+                                                    {{ order_item.quantity }}
+                                                    <a href="{% url 'core:add-to-cart' order_item.item.slug %}"><i class="fa fa-plus ml-2"></i></a>
+                                                </div>
+                                             </div>
+                                          </td>
+                                          <td class="product-subtotal" data-title="TOTAL">
+                                             <span class="woocommerce-Price-amount amount">
+                                               {% if order_item.item.discount_price %}
+                                              <span class="woocommerce-Price-currencySymbol">R$</span>{{ order_item.get_total_discount_item_price }} </span><span class="badge badge-primary"> Desconto de R${{ order_item.get_amount_saved }}</span>
+                                               {% else %}
+                                                  R${{ order_item.get_total_item_price }}
+                                              {% endif %}
+                                          </td>
+                                       </tr>
+                                        {% endfor %}
+                                        <tr>
+                                          <td colspan="6" class="actions">
+                                             <div class="coupon">
+                                                <label for="coupon_code">Cupom:</label>
+                                                <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="Código do Cupom" />
+                                                <input type="submit" class="button" name="apply_coupon" value="Aplicar Cupom" />
+                                             </div>
+                                             
+                                                <input onclick="window.location.href = '/';" type="submit" class="button" name="update_cart" value="CONTÍNUAR COMPRANDO" />
+                                             
+                                             <div class="wc-proceed-to-checkout">
+                                                <a href="/checkout/" class="checkout-button button alt wc-forward">FINALIZAR PEDIDO</a>
+                                             </div>
+                                             <input type="hidden" id="_wpnonce" name="_wpnonce" value="21ca9d92f8" /><input type="hidden" name="_wp_http_referer"  />
+                                          </td>
+                                       </tr>
+                                    </tbody>
+                                 </table>
+                              
+                              <div class="cart-collaterals">
+                                 <div class="cart_totals ">
+                                    <h2>Cart Totals</h2>
+                                    <table  class="shop_table shop_table_responsive">
+                                       <tr class="cart-subtotal">
+                                          <th>Cupom</th>
+                                          <td data-title="Subtotal">
+                                             <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">R$</span>{{ object.coupon.amount }}</span>
+                                          </td>
+                                       </tr>
+                                       <tr class="order-total">
+                                          <th>Total</th>
+                                          <td data-title="Total">
+                                             <strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">R$</span>{{ object.get_total }}</span></strong>
+                                          </td>
+                                       </tr>
+                                    </table>
+                                    <div class="wc-proceed-to-checkout">
+                                       <a href="/checkout/" class="checkout-button button alt wc-forward">FAZER PEDIDO</a>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- .entry-content -->
+                    </main><!-- #main -->
+               </div>
+               <!-- #post-## -->
+            </div>
+            <!-- #primary -->
+         </div>
+         <!-- .col-full -->
+      </div>
+</div>
+</div>
+{% endblock %}

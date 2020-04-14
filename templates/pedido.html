@@ -1,0 +1,208 @@
+{% extends "base.html" %}{% load staticfiles %}{% block base %}
+<div id="page" class="hfeed site style-1 woocommerce-page woocommerce-order-received woocommerce-checkout">
+<header id="masthead" class="site-header header-v1" style="background-image: none; ">
+<div class="col-full">
+   <a class="skip-link screen-reader-text" href="#site-navigation">Skip to navigation</a>
+   <a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+   <div class="header-wrap">
+      <div class="site-branding">
+         <a href="/" class="custom-logo-link" rel="home">
+               {% include "logo.html" %}
+         </a>
+      </div>
+      <nav id="site-navigation" class="main-navigation" aria-label="Primary Navigation">
+         <button class="menu-toggle" aria-controls="site-navigation" aria-expanded="false"><span class="close-icon"><i class="po po-close-delete"></i></span><span class="menu-icon"><i class="po po-menu-icon"></i></span><span class=" screen-reader-text">Menu</span></button>
+         <div class="primary-navigation">
+            <ul id="menu-main-menu" class="menu nav-menu" aria-expanded="false">
+               <li class="menu-item active"><a href="/">INICIAL</a></li>
+               <li class="menu-item"><a href="/">CARDÁPIO</a></li>
+               <li class="menu-item"><a href="/">GALERIA</a></li>
+               <li class="menu-item"><a href="/">CONTATO</a></li>
+            </ul>
+         </div>
+         <div class="handheld-navigation">
+            <span class="phm-close">Fechar</span>
+            <ul class="menu">
+               <li class="menu-item"><a href="shop-grid-3-column.html"><i class="po po-pizza"></i>PIZZAS</a></li>
+               <li class="menu-item"><a href="shop-grid-3-column.html"><i class="po po-burger"></i>HAMBÚRGUES</a></li>
+               <li class="menu-item"><a href="shop-grid-3-column.html"><i class="po po-fries"></i>BATATAS</a></li>
+               <li class="menu-item"><a href="shop-grid-3-column.html"><i class="po po-drinks"></i>BEBIDAS</a></li>
+            </ul>
+         </div>
+      </nav>
+      <!-- #site-navigation -->
+      <div class="header-info-wrapper">
+         <div class="header-phone-numbers">
+            <span class="intro-text">Ligue e faça o pedido</span>
+            <select class="select-city-phone-numbers" name="city-phone-numbers" id="city-phone-numbers">
+               <option value="(99) 99999-9999">Whatsapp</option>
+               <option value="(00) 00000-0000">Claro</option>
+               <option value="(11) 11111-1111">Tim</option>
+               <option value="(22) 22222-2222">Vivo</option>
+            </select>
+            <span id="city-phone-number-label" class="phone-number">(99) 99999-9999</span>
+         </div>
+         <ul class="site-header-cart-v2 menu">
+            <li class="cart-content ">
+               <a href="{{ object.get_add_to_cart_url }}" title="{{object.title|upper}}">
+               <i class="po po-scooter"></i>
+               <span>SEU PEDIDO</span>
+               </a>
+               <ul class="sub-menu">
+                  <li>
+                     <a href="{{ object.get_add_to_cart_url }}" title="{{object.title|upper}}">
+                     <span class="count">SEM PEDIDO</span><span class="amount"></span>
+                     </a>
+                  </li>
+               </ul>
+            </li>
+         </ul>
+      </div>
+   </div>
+   <div class="pizzaro-secondary-navigation">
+      <nav class="secondary-navigation" aria-label="Secondary Navigation">
+         <ul class="menu">
+            <li class="menu-item"><a href=""><i class="po po-pizza"></i>PIZZAS</a></li>
+            <li class="menu-item"><a href=""><i class="po po-burger"></i>HAMBÚRGUES</a></li>
+            <li class="menu-item"><a href=""><i class="po po-fries"></i>BATATAS</a></li>
+            <li class="menu-item"><a href=""><i class="po po-drinks"></i>BEBIDAS</a></li>
+         </ul>
+      </nav>
+   </div>
+</div>
+</header>
+<div id="content" class="site-content" tabindex="-1" >
+   <div class="col-full">
+      <div class="pizzaro-breadcrumb">
+         <nav class="woocommerce-breadcrumb">
+            <a href="/">OLÁ <b>{{pedido_base.user|upper}}</b></a>
+            <span class="delimiter"><i class="po po-arrow-right-slider"></i></span>
+            <a href="#">STATUS DO SEU PEDIDO</a>
+             <span class="delimiter"><i class="po po-arrow-right-slider"></i></span>
+            NÚMERO DO PEDIDO {{pedido_base.id}}
+         </nav>
+      </div>
+      <div id="primary" class="content-area">
+         <main id="main" class="site-main" >
+
+            <div id="post-9" class="post-9 page type-page">
+              <center>
+                  <h2 style="color:green; font-family:verdana; font-size:40px;">
+                     STATUS DO SEU PEDIDO
+                  </h2>               
+               	<div class="container">
+                     <div class="row">
+                        <div class="col-md-12">
+                        {% if pedido_base.ordered is True %}
+                        <i class="fa fa-thumbs-up" style="font-size:100px; color:green;"></i>
+                           <h4 style="color:green; font-family:verdana; font-size:20px;">
+                          SEU PEDIDO ESTA<br> SENDO PROCESSADO.
+                          <h4>
+                        {% endif %}
+
+                        {% if pedido_base.ordered is False %}
+                        <i class="fa fa-thumbs-up" style="font-size:100px; color:#d5d5d5;"></i><br>
+                          <h4 style="color:#d5d5d5; font-family:verdana; font-size:20px;">
+                          SEU PEDIDO FOI ENTREGUE <br> PARA NOSSO MASTERCHEF!
+                          <h4>
+                        {% endif %}
+                        <br>     
+                        <hr>
+                        {% if pedido_base.being_delivered is True %}
+                       
+                        <i class="po po-scooter" style="font-size:100px; color:green;"></i>
+                           <h4 style="color:green; font-family:verdana; font-size:20px;">
+                          SEU PEDIDO SAIU <br>PARA ENTREGA!<h4>
+                        {% endif %}
+
+                        {% if pedido_base.being_delivered is False %}
+                        <i class="po po-scooter" style="font-size:100px; color:#d5d5d5;"></i><br>
+                          <h4 style="color:#d5d5d5; font-family:verdana; font-size:20px;">
+                          CALMA SEU PEDIDO <br> JÁ ESTÁ QUASE SAINDO.
+                          <h4>
+                        {% endif %}
+                        <br>     
+                        <hr>
+                        {% if pedido_base.received is True %}
+                        <i class="fa fa-check-square-o" style="font-size:100px; color:green;"></i>
+                           <h4 style="color:green; font-family:verdana; font-size:20px;">
+                          SEU PEDIDO  <br>FOI ENTREGUE.<h4>
+                           <br><p style="font-size: 15px; color: #000000; font-weight: normal; text-decoration: none; font-style: normal; font-variant: normal; text-transform: none;">Obrigado {{user|upper}}, Agradecemos a preferência e a confiança depositada.<br> Fazemos sempre o nosso melhor para que nossa relação seja a mais duradoura.</p>
+                        {% endif %}
+
+                        {% if pedido_base.received is False %}
+                        <i class="fa fa-check-square-o" style="font-size:100px; color:#d5d5d5;"></i><br>
+                          <h4 style="color:#d5d5d5; font-family:verdana; font-size:20px;">
+                          CALMA SEU PEDIDO <br> ESTÁ CHEGANDO!
+                          <h4>
+                        {% endif %}
+
+                        </div>
+                     </div>
+                  </div>
+                  </center>
+            </div>
+         </main>
+      </div>
+   </div>
+</div>
+
+<footer id="colophon" class="site-footer footer-v1">
+   <div class="col-full">
+      <div class="footer-social-icons">
+         <span class="social-icon-text">SIGA-NOS</span>
+         <ul class="social-icons list-unstyled">
+            <li><a class="fa fa-facebook" href="#"></a></li>
+            <li><a class="fa fa-instagram" href="#"></a></li>
+         </ul>
+      </div>
+      <div class="footer-logo">
+         <a href="/" class="custom-logo-link" rel="home">
+            {% include "logo.html" %}
+         </a>
+      </div>
+      <div class="site-address">
+         <ul class="address">
+            <li>Tarantella Pizzas & Burgues</li>
+            <li>Rua Tancredo Neves, 403 - Jardim São Luís</li>
+            <li>Telefone: (99) 3525-1336</li>
+            <li>Whatsapp: (99) 98274-1695</li>
+         </ul>
+      </div>
+      <div class="site-info">
+         <p class="copyright">Copyright &copy; 2020 Tarantella - Pizzas & Burgues. Todos os direitos reservados.</p>
+      </div>
+      <!-- .site-info -->
+      <a role="button" class="footer-action-btn" data-toggle="collapse" href="#footer-map-collapse"><i class="po po-map-marker"></i>Find us on Map</a>
+      <div class="pizzaro-handheld-footer-bar">
+         <ul class="columns-3">
+            <li class="my-account">
+               <a href="/accounts/login/">MINHA CONTA</a>
+            </li>
+            <li class="search">
+               <a href="">BUSCAR POR</a>
+               <div class="site-search">
+                  <div class="widget woocommerce widget_product_search">
+                     <form role="search" method="get" class="woocommerce-product-search" >
+                        <label class="screen-reader-text" for="woocommerce-product-search-field">Search for:</label>
+                        <input type="search" id="woocommerce-product-search-field" class="search-field" placeholder="Buscar.." value="" name="s" title="Search for:" />
+                        <input type="submit" value="Search" />
+                        <input type="hidden" name="post_type" value="product" />
+                     </form>
+                  </div>
+               </div>
+            </li>
+            <li class="cart">
+               <a class="footer-cart-contents" href="/checkout/" title="View your shopping cart">
+                 
+               <span class="count">{{ object.items.count }}</span>
+              
+               </a>
+            </li>
+         </ul>
+      </div>
+   </div>
+   <!-- .col-full -->
+</footer>
+</div>
+{% endblock %}

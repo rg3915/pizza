@@ -1,0 +1,216 @@
+{% extends "base.html" %}{% load staticfiles %}{% load i18n %}{% load account socialaccount %}{% block base %}
+<div id="page" class="hfeed site woocommerce-account">
+<header id="masthead" class="site-header header-v1" style="background-image: none; ">
+<div class="col-full">
+<a class="skip-link screen-reader-text" href="#site-navigation">Skip to navigation</a>
+<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+<div class="header-wrap">
+   <div class="site-branding">
+      <a href="/" class="custom-logo-link" rel="home">
+            {% include "logo.html" %}
+      </a>
+   </div>
+   <nav id="site-navigation" class="main-navigation" aria-label="Primary Navigation">
+      <button class="menu-toggle" aria-controls="site-navigation" aria-expanded="false"><span class="close-icon"><i class="po po-close-delete"></i></span><span class="menu-icon"><i class="po po-menu-icon"></i></span><span class=" screen-reader-text">Menu</span></button>
+      <div class="primary-navigation">
+         <ul id="menu-main-menu" class="menu nav-menu" aria-expanded="false">
+            <li class="menu-item active"><a href="/">INICIAL</a></li>
+            <li class="menu-item"><a href="/">CARDÁPIO</a></li>
+            <li class="menu-item"><a href="/">GALERIA</a></li>
+            <li class="menu-item"><a href="/">CONTATO</a></li>
+         </ul>
+      </div>
+      <div class="handheld-navigation">
+         <span class="phm-close">Fechar</span>
+         <ul class="menu">
+            <li class="menu-item"><a href="shop-grid-3-column.html"><i class="po po-pizza"></i>PIZZAS</a></li>
+            <li class="menu-item"><a href="shop-grid-3-column.html"><i class="po po-burger"></i>HAMBÚRGUES</a></li>
+            <li class="menu-item"><a href="shop-grid-3-column.html"><i class="po po-fries"></i>BATATAS</a></li>
+            <li class="menu-item"><a href="shop-grid-3-column.html"><i class="po po-drinks"></i>BEBIDAS</a></li>
+         </ul>
+      </div>
+   </nav>
+   <!-- #site-navigation -->
+   <div class="header-info-wrapper">
+      <div class="header-phone-numbers">
+         <span class="intro-text">Ligue e faça o pedido</span>
+         <select class="select-city-phone-numbers" name="city-phone-numbers" id="city-phone-numbers">
+            <option value="(99) 99999-9999">Whatsapp</option>
+            <option value="(00) 00000-0000">Claro</option>
+            <option value="(11) 11111-1111">Tim</option>
+            <option value="(22) 22222-2222">Vivo</option>
+         </select>
+         <span id="city-phone-number-label" class="phone-number">(99) 99999-9999</span>
+      </div>
+      {% if user.is_authenticated %}
+       <ul class="site-header-cart-v2 menu">
+          <li class="cart-content" style="background:fff; color:green;">
+             <a href="{% url 'account_logout' %}">
+             <i class="fa fa-user" aria-hidden="true"></i>
+             <span title="Estou Logado">{{user|upper}}</span> | <span title="Sair">SAIR</span>
+             </a> 
+          </li>
+       </ul>
+       {% else %}
+       <ul class="site-header-cart-v2 menu">
+          <li class="cart-content" style="background:fff; color:green;">
+             <a href="/accounts/login/" title="Login / Cadastro">
+             <i class="fa fa-sign-in" aria-hidden="true"></i>
+             <span>LOGIN / CADASTRO</span>
+             </a>
+          </li>
+       </ul>
+       {% endif %}
+   </div>
+</div>
+<div class="pizzaro-secondary-navigation">
+   <nav class="secondary-navigation" aria-label="Secondary Navigation">
+      <ul class="menu">
+         <li class="menu-item"><a href=""><i class="po po-pizza"></i>PIZZAS</a></li>
+         <li class="menu-item"><a href=""><i class="po po-burger"></i>HAMBÚRGUES</a></li>
+         <li class="menu-item"><a href=""><i class="po po-fries"></i>BATATAS</a></li>
+         <li class="menu-item"><a href=""><i class="po po-drinks"></i>BEBIDAS</a></li>
+      </ul>
+   </nav>
+</div>
+</div>
+</header>
+<div id="content" class="site-content" tabindex="-1" >
+   <div class="col-full">
+      <div class="pizzaro-breadcrumb">
+         <nav class="woocommerce-breadcrumb" ><a href="/">INICIAL</a><span class="delimiter"><i class="po po-arrow-right-slider"></i></span>MINHA CONTA</nav>
+      </div>
+      <!-- .woocommerce-breadcrumb -->
+      <div id="primary" class="content-area">
+         <main id="main" class="site-main" >
+            <div id="post-10" class="post-10 page type-page status-publish hentry">
+               <div class="entry-content">
+                  <div class="woocommerce">
+                     <div class="customer-login-form">
+                        <span class="or-text">ou</span>
+                        <div class="u-columns col2-set" id="customer_login">
+                           <div class="u-column1 col-1">
+                              <h2>Login</h2>
+                              <form  class="login" method="POST" action="{% url 'account_login' %}">{% csrf_token %}
+                                <div class="alert alert-block alert-error">
+                                   <p class="before-login-text">Bem vindo de volta! Faça login em sua conta</p>
+                                   <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
+                                      <label for="id_login">Loguin<span class="required">*</span></label>
+                                      <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="login" id="id_login" value="" />
+                                   </p>
+                                   {% if form.login.errors %}
+                                    <div class="row">
+                                      <div class="col-xs-12 col-md-12">
+                                        {{ form.login.errors }}
+                                      </div>
+                                    </div>
+                                    {% endif %}
+                                   <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
+                                      <label for="id_password">Senha <span class="required">*</span></label>
+                                      <input class="woocommerce-Input woocommerce-Input--text input-text" type="password" name="password" id="id_password" />
+                                   </p>
+                                   {% if form.password.errors %}
+                                    <div class="row">
+                                      <div class="col-xs-12 col-md-12">
+                                        {{ form.password.errors }}
+                                      </div>
+                                    </div>
+                                    {% endif %}
+                                   <p class="form-row">
+                                      <input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce" value="02aaeb6b10" />
+                                      <input type="hidden" name="_wp_http_referer" value="/pizzaro/my-account/" />
+                                      <input type="submit" class="woocommerce-Button button" name="Entrar" value="Entrar" />
+                                      <label for="rememberme" class="inline">
+                                      <input class="woocommerce-Input woocommerce-Input--checkbox" name="remember" type="checkbox" id="id_remember" value="forever" />Lembrar-me 
+                                      </label>
+                                   </p>
+                                   <p class="woocommerce-LostPassword lost_password">
+                                      <a href="{% url 'account_reset_password' %}">Esqueceu a sua senha?</a>
+                                   </p>
+                               </div>
+                              </form>
+                           </div>
+                           <div class="u-column2 col-2">
+                              <h2>Cadastro</h2>
+                              <form  class="register" method="post" action="{% url 'account_signup' %}">{% csrf_token %}
+                                 <p class="before-register-text">Crie sua própria conta</p>
+                                 <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
+                                    <label for="username">Usuário <span class="required">*</span></label>
+                                    <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="username" id="id_username" value="" />
+                                 </p>
+                                  {% if form.username.errors %}
+                                  <div class="row">
+                                    <div class="col-xs-12 col-md-12">
+                                      {{ form.username.errors }}
+                                    </div>
+                                  </div>
+                                  {% endif %}
+                                 <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
+                                    <label for="email">Email <span class="required">*</span></label>
+                                    <input type="email" class="woocommerce-Input woocommerce-Input--text input-text" name="email" id="id_email" value="" />
+                                 </p>
+                                  {% if form.email.errors %}
+                                  <div class="row">
+                                    <div class="col-xs-12 col-md-12">
+                                      {{ form.email.errors }}
+                                    </div>
+                                  </div>
+                                  {% endif %}
+                                 <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
+                                    <label for="password1">Sua Senha <span class="required">*</span></label>
+                                    <input type="password" class="woocommerce-Input woocommerce-Input--text input-text" name="password1" id="id_password1" />
+                                 </p>
+                                  {% if form.password1.errors %}
+                                  <div class="row">
+                                    <div class="col-xs-12 col-md-12">
+                                      {{ form.password1.errors }}
+                                    </div>
+                                  </div>
+                                  {% endif %}
+                                 <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
+                                    <label for="password2">Confirme sua senha <span class="required">*</span></label>
+                                    <input type="password" class="woocommerce-Input woocommerce-Input--text input-text" name="password2" id="id_password2" />
+                                 </p>
+                                  {% if form.id_password2.errors %}
+                                  <div class="row">
+                                    <div class="col-xs-12 col-md-12">
+                                      {{ form.id_password2.errors }}
+                                    </div>
+                                  </div>
+                                  {% endif %}
+                                 <!-- Spam Trap -->
+                                 <div style="left: -999em; position: absolute;">
+                                    <label for="trap">Anti-spam</label>
+                                    <input type="text" name="email_2" id="trap" tabindex="-1" />
+                                 </div>
+                                 <p class="woocomerce-FormRow form-row">
+                                    <input type="hidden" id="woocommerce-register-nonce" name="woocommerce-register-nonce" value="1fe13dcb6d" />
+                                    <input type="hidden" name="_wp_http_referer"/>
+                                    <input type="submit" class="woocommerce-Button button" name="register" value="Cadastrar" />
+                                 </p>
+                                 <div class="register-benefits">
+                                    <h3>Cadastra-se hoje e você será capaz de:</h3>
+                                    <ul>
+                                       <li>Acelere o processo de checkout</li>
+                                       <li>Acompanhe seus pedidos facilmente</li>
+                                       <li>Mantenha um registro de todas as suas compras</li>
+                                    </ul>
+                                 </div>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- /.customer-login-form -->
+                  </div>
+               </div>
+               <!-- .entry-content -->
+            </div>
+            <!-- #post-## -->
+         </main>
+         <!-- #main -->
+      </div>
+      <!-- #primary -->
+   </div>
+   <!-- .col-full -->
+</div>
+{% endblock %}

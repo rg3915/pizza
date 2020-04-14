@@ -1,0 +1,143 @@
+{% extends "base.html" %}{% load staticfiles %}{% block base %}
+
+         <div id="content" class="site-content" tabindex="-1" >
+            <div class="col-full">
+               <div class="pizzaro-breadcrumb">
+                  <nav class="woocommerce-breadcrumb">
+                     <a href="/">INICIAL</a>
+                     <span class="delimiter"><i class="po po-arrow-right-slider"></i></span>CARRINHO
+                     <span class="delimiter"><i class="po po-arrow-right-slider"></i></span>
+                     VERIFICAÇÃO DA SAÍDA
+                     <span class="delimiter"><i class="po po-arrow-right-slider"></i></span>
+                     <a href="#">PEDIDO RECEBIDO</a>
+                  </nav>
+               </div>
+               <div id="primary" class="content-area">
+                  <main id="main" class="site-main" >
+                     <div class="pizzaro-order-steps">
+                        <ul>
+                           <li class="cart">
+                              <span class="step">1</span>Carrinho de Compra
+                           </li>
+                           <li class="checkout">
+                              <span class="step">2</span>Finalização do Pedido
+                           </li>
+                           <li class="complete">
+                              <span class="step">3</span>Pedido Concluído
+                           </li>
+                        </ul>
+                     </div>
+                     <div id="post-9" class="post-9 page type-page status-publish hentry">
+                        <header class="entry-header">
+                           <h1 class="entry-title">Pedido Recebido</h1>
+                        </header>
+                        <!-- .entry-header -->
+                        <div class="entry-content">
+                           <div class="woocommerce">
+                              <p class="woocommerce-thankyou-order-received">Obrigado. Seu pedido foi recebido.</p>
+                              <ul class="woocommerce-thankyou-order-details order_details">
+                                 <li class="order">NÚMERO DO PEDIDO:<strong><a href="/pedido/{{ order.id }}">{{ order.id }}</a></strong></li>
+                                 <li class="date">DATA E HORA:<strong>{{ order.ordered_date }}</strong></li>
+                                 <li class="total">TOTAL:<strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">R$</span>{{ order.get_total }}</span></strong></li>
+                                 <li class="method">FORMA DE PAGAMENTO:<strong>
+
+                                       {% if order.payment_option is true %}
+                                          Dinheiro
+                                          {% else %}
+                                          cartao
+                                       {% endif %}
+                              </strong></li>
+                              </ul>
+                              <div class="clear"></div>
+                              <p>Faça seu pagamento diretamente em nossa conta bancária. Por favor, use o seu ID do pedido como referência de pagamento. Seu pedido não será enviado até que os fundos sejam liberados em sua conta.</p>
+                              <h2>Detalhe do Pedido</h2>
+                              <table class="shop_table order_details">
+                                 <thead>
+                                    <tr>
+                                       <th class="product-name">PRODUTO</th>
+                                       <th class="product-total">VALOR UNITÁRIO</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                   {% for order_item in order.items.all %}
+                                    <tr class="order_item">
+                                       <td class="product-name">
+                                          <a href="#">{{ order_item.item.title }}</a> <strong class="product-quantity">× {{ order_item.quantity }}</strong>
+                                          <dl class="variation">
+                                             <dt class="variation-PickSize362590"><span id="1">TAMANHO:</span><span class="woocommerce Price amount amount"><span class="woocommerce Price currencySymbol"></dt>
+                                             <dd class="variation-PickSize362590">
+                                                <p>{{ order_item.item.tamanho.nome }}</p>
+                                             </dd>
+                                          </dl>
+                                       </td>
+                                       <td class="product-total"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">R$</span>{{ order_item.item.price }}</span>  </td>
+                                    </tr>
+                                    {% endfor %}
+                                 </tbody>
+                                 <tfoot>
+                                    <tr>
+                                       <th scope="row">DESCONTO:</th>
+                                       {% for order_item in order.items.all %}
+                                        {% if order_item.item.discount_price %}
+                                       <td><span class="woocommerce-Price-amount amount">
+                                          <span class="woocommerce-Price-currencySymbol"></span>
+                                        </span>
+                                       R${{ order_item.get_amount_saved }}
+                                       {% else %}
+                                                  R${{ order_item.get_total_item_price }}
+                                          {% endif %}        
+                                       </td>
+                                       {% endfor %}
+                                    </tr>
+                                    <tr>
+                                       <th scope="row">FORMA DE PAGAMENTO:</th>
+                                       <td>{{order.payment}}</td>
+                                    </tr>
+                                    <tr>
+                                       <th scope="row">TOTAL:</th>
+                                       <td><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">R$</span>{{ order.get_total }}</span></td>
+                                    </tr>
+                                 </tfoot>
+                              </table>
+                              <header>
+                              <header class="title">
+                                 <h3>Endereço de Entrega</h3>
+                              </header>
+                              <address><b>Nome:</b> {{ user }}<br><b>Endereço:</b> {{order.shipping_address.street_address}}<br><b>Referência:</b> {{order.shipping_address.apartment_address}}<br> <b>Telefone</b>: {{ user }}</address>
+                           
+                                {{billing_pagamento}}
+
+                                <center><a href="https://api.whatsapp.com/send?phone=5599984616623&text=%20_*OLÁ {{ user|upper }}*, SEU PEDIDO FOI REALIZADO COM SUCESSO, EM BREVE VOLTAREMOS AQUI PARA LHE INFORMAR MAIS SOBRE SEU PEDIDO_ 
+                                 ============
+                                 **DADOS DO SEU PEDIDO**
+                                 {% for order_item in order.items.all %}
+                                 ============
+                                 *Produto:* {{ order_item.item.title }}
+                                 *Quantidade:* {{ order_item.quantity }}
+                                 *Tamanho:* {{ order_item.item.tamanho.nome }}
+                                 *Valor UNI:* {{ order_item.item.price }}
+                                 ============
+                                 {% endfor %} 
+                                 ============
+                                  *Valor Total: {{ order.get_total }}*
+                                  ============
+                                  Prazo de entrega de 40 a 50 minutos..
+                                  ============
+                                 Acompanhe seu pedido pelo link: http://localhost:8000/pedido/{{order.id}}/"><button class="button alt" type="submit"style="text-align: center;">CLIQUE AQUI PARA FINALIZAR</button></a> </center>
+
+
+
+                              <!-- <center><a href="https://api.whatsapp.com/send?text=_*OLÁ {{ user|upper }}*, SEU PEDIDO FOI PROCESSADO COM SUCESSO EM BREVE VOLTAREMOS AQUI PARA LHE INFORMAR MAIS SOBRE SEU PEDIDO*_ {% for order_item in order.items.all %} Produto: {{ order_item.item.title }} × Quant:{{ order_item.quantity }}Tamanho:{{ order_item.item.tamanho.nome }}Valor Total: {{ order.get_total }} {% endfor %} Acompanhe seu pedido pelo link: http://www.localhost:8000/pedido/{{object_lists.slug}}/"><button class="button alt" type="submit"style="text-align: center;">CLIQUE AQUI PARA FINALIZAR</button></a> </center> -->
+                           </div>
+                        </div>
+                        <!-- .entry-content -->
+                     </div>
+                     <!-- #post-## -->
+                  </main>
+                  <!-- #main -->
+               </div>
+            </div>
+            <!-- .col-full -->
+         </div>
+
+{% endblock %}

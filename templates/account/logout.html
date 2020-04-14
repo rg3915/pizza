@@ -1,0 +1,127 @@
+{% extends "base.html" %}{% load staticfiles %}{% block base %}
+<div id="page" class="hfeed site woocommerce-account">
+<header id="masthead" class="site-header header-v1" style="background-image: none; ">
+<div class="col-full">
+<a class="skip-link screen-reader-text" href="#site-navigation">Skip to navigation</a>
+<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+<div class="header-wrap">
+   <div class="site-branding">
+      <a href="/" class="custom-logo-link" rel="home">
+            {% include "logo.html" %}
+      </a>
+   </div>
+   <nav id="site-navigation" class="main-navigation" aria-label="Primary Navigation">
+      <button class="menu-toggle" aria-controls="site-navigation" aria-expanded="false"><span class="close-icon"><i class="po po-close-delete"></i></span><span class="menu-icon"><i class="po po-menu-icon"></i></span><span class=" screen-reader-text">Menu</span></button>
+      <div class="primary-navigation">
+         <ul id="menu-main-menu" class="menu nav-menu" aria-expanded="false">
+            <li class="menu-item active"><a href="/">INICIAL</a></li>
+            <li class="menu-item"><a href="/">CARDÁPIO</a></li>
+            <li class="menu-item"><a href="/">GALERIA</a></li>
+            <li class="menu-item"><a href="/">CONTATO</a></li>
+         </ul>
+      </div>
+      <div class="handheld-navigation">
+         <span class="phm-close">Fechar</span>
+         <ul class="menu">
+            <li class="menu-item"><a href="shop-grid-3-column.html"><i class="po po-pizza"></i>PIZZAS</a></li>
+            <li class="menu-item"><a href="shop-grid-3-column.html"><i class="po po-burger"></i>HAMBÚRGUES</a></li>
+            <li class="menu-item"><a href="shop-grid-3-column.html"><i class="po po-fries"></i>BATATAS</a></li>
+            <li class="menu-item"><a href="shop-grid-3-column.html"><i class="po po-drinks"></i>BEBIDAS</a></li>
+         </ul>
+      </div>
+   </nav>
+   <!-- #site-navigation -->
+   <div class="header-info-wrapper">
+      <div class="header-phone-numbers">
+         <span class="intro-text">Ligue e faça o pedido</span>
+         <select class="select-city-phone-numbers" name="city-phone-numbers" id="city-phone-numbers">
+            <option value="(99) 99999-9999">Whatsapp</option>
+            <option value="(00) 00000-0000">Claro</option>
+            <option value="(11) 11111-1111">Tim</option>
+            <option value="(22) 22222-2222">Vivo</option>
+         </select>
+         <span id="city-phone-number-label" class="phone-number">(99) 99999-9999</span>
+      </div>
+      {% if user.is_authenticated %}
+       <ul class="site-header-cart-v2 menu">
+          <li class="cart-content" style="background:fff; color:green;">
+             <a href="{% url 'account_logout' %}" style="font-size:25px;">
+             <i class="fa fa-user" aria-hidden="true"></i>
+             <span title="Estou Logado">{{user|upper}}</span> | <span title="Sair">SAIR</span>
+             </a> 
+          </li>
+       </ul>
+       {% else %}
+       <ul class="site-header-cart-v2 menu">
+          <li class="cart-content" style="background:fff; color:green;">
+             <a href="/accounts/login/" title="Login / Cadastro">
+             <i class="fa fa-sign-in" aria-hidden="true"></i>
+             <span>LOGIN / CADASTRO</span>
+             </a>
+          </li>
+       </ul>
+       {% endif %}
+   </div>
+</div>
+<div class="pizzaro-secondary-navigation">
+   <nav class="secondary-navigation" aria-label="Secondary Navigation">
+      <ul class="menu">
+         <li class="menu-item"><a href=""><i class="po po-pizza"></i>PIZZAS</a></li>
+         <li class="menu-item"><a href=""><i class="po po-burger"></i>HAMBÚRGUES</a></li>
+         <li class="menu-item"><a href=""><i class="po po-fries"></i>BATATAS</a></li>
+         <li class="menu-item"><a href=""><i class="po po-drinks"></i>BEBIDAS</a></li>
+      </ul>
+   </nav>
+</div>
+</div>
+</header>
+<div id="content" class="site-content" tabindex="-1" >
+   <div class="col-full">
+      <div class="pizzaro-breadcrumb">
+         <nav class="woocommerce-breadcrumb" ><a href="/">INICIAL</a><span class="delimiter"><i class="po po-arrow-right-slider"></i></span>MINHA CONTA</nav>
+      </div>
+      <!-- .woocommerce-breadcrumb -->
+      <div id="primary" class="content-area">
+         <main id="main" class="site-main" >
+            <div id="post-10" class="post-10 page type-page status-publish hentry">
+               <div class="entry-content">
+                  <div class="woocommerce">
+                     <div class="customer-login-form">
+                        <center>
+                        <div class="u-columns col2-set" >
+                             <main>
+                              <div class="container">
+                                <section class="mb-4">
+                                  <div class="row wow fadeIn">
+                                    <div class='col-6 offset-3'>
+                                      <h1>Sair</h1>
+                                      <p>Você tem certeza que deseja sair {{ user }}?</p>
+                                      <form method="post" action="{% url 'account_logout' %}">
+                                        {% csrf_token %}
+                                        {% if redirect_field_value %}
+                                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                                        {% endif %}
+
+                                        <button class="button alt" type="submit"style="text-align: center;">CLIQUE AQUI PARA SAIR DA SUA CONTA</button>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </section>
+                              </div>
+                            </main>
+                        </div></center>
+                     </div>
+                     <!-- /.customer-login-form -->
+                  </div>
+               </div>
+               <!-- .entry-content -->
+            </div>
+            <!-- #post-## -->
+         </main>
+         <!-- #main -->
+      </div>
+      <!-- #primary -->
+   </div>
+   <!-- .col-full -->
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+<div class="section-tabs section-products">
+                  <h2 class="section-title">PROMOÇÃO DO DIA</h2>
+                  <ul class="nav nav-tabs pizzaro-nav-tabs" >
+                     {% for itens in base_filter %}
+                     <li class="nav-item {{itens.active}}">
+                        <a href="#{{itens.slug}}" data-toggle="tab">{{itens.nome}}</a>
+                     </li>
+                     {% endfor %}
+                  </ul>
+                  <div class="tab-content">
+                       {% for itens in base_filter %}
+                     <div class="tab-pane {{itens.active}}" id="{{itens.slug}}">
+                        <div class="section-products">
+                           <div class="woocommerce columns-4">
+                              <div class="columns-4">
+                                 <ul class="products">
+                                      {% for obj in itens.item_set.all %}
+                                    <li class="product">
+                                       <div class="product-outer">
+                                          <div class="product-inner">
+                                             <div class="product-image-wrapper">
+                                                <a href="#" class="woocommerce-LoopProduct-link">
+                                                <img src="{{ obj.image.url }}" class="img-responsive" alt="">
+                                                </a>
+                                             </div>
+                                             <div class="product-content-wrapper">
+                                                <a href="{{ obj.get_absolute_url }}" class="woocommerce-LoopProduct-link">
+                                                   <h3>{{ obj.title }}</h3>
+                                                   <div itemprop="description">
+                                                      <p style="max-height: none;">{{obj.description|safe}}</p>
+                                                   </div>
+                                                   <div class="yith_wapo_groups_container">
+                                                      <div class="ywapo_group_container ywapo_group_container_radio form-row form-row-wide " data-requested="1" data-type="radio" data-id="1" data-condition="">
+                                                         <h3><span>TAMANHO</span></h3>
+                                                         <div class="ywapo_input_container ywapo_input_container_radio">
+
+
+                                                            <span class="ywapo_label_tag_position_after"><span class="ywapo_option_label ywapo_label_position_after">{{obj.tamanho.nome}}</span></span><span class="ywapo_label_price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">R$</span>{{ obj.price|stringformat:"d" }}<span class="woocommerce-Price-currencySymbol">,00</span></span></span>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </a>
+                                                <div class="hover-area">
+                                                   <a rel="nofollow" href="{{ obj.get_absolute_url }}" class="button product_type_simple add_to_cart_button ajax_add_to_cart">EU QUERO!</a>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </li>
+                                     {% endfor %}
+                                 </ul>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     {% endfor %}
+                  </div>
+               </div>

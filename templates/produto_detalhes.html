@@ -1,0 +1,65 @@
+{% extends "base.html" %}{% load staticfiles %}{% block base %}
+<div class="container">
+  
+
+<div class="col-md-10">
+<div id="primary" class="content-area">
+  <main id="main" class="site-main" >
+     <div itemscope  id="product-123" class="post-123 product type-product status-publish has-post-thumbnail product_cat-pizza pa_food-type-veg first instock shipping-taxable purchasable product-type-simple addon-product">
+       <form class="cart" method="POST" enctype='multipart/form-data'>{% csrf_token %}
+        <div class="single-product-wrapper">
+           <div class="product-images-wrapper">
+              <div class="images">
+                 <img width="600" height="600" src="{{ item.image.url }}" class="attachment-shop_single size-shop_single wp-post-image" alt=""/>
+              </div>
+           </div>
+           <!-- /.product-images-wrapper -->
+           <div class="summary entry-summary">
+              <h1 itemprop="name" class="product_title entry-title">{{object.title|upper}}</h1>
+              <div itemprop="description">
+                 {{object.description|safe}}
+              </div>
+              <div class="ywapo_input_container ywapo_input_container_radio">
+                 <input data-typeid="3" data-price="19.9" data-pricetype="fixed" data-index="0" type="radio" name="ywapo_radio_3[]" value="0" required checked class="ywapo_input ywapo_input_radio ywapo_price_fixed"   />
+                 <label class="ywapo_label_tag_position_after">
+                 <span class="ywapo_option_label ywapo_label_position_after">{{object.tamanho.nome|upper}}</span>
+
+                 </label>
+                 <span class="ywapo_label_price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol" id="id_valor">R$</span>{{object.price}}</span></span>
+              </div>
+             
+           </div>
+           <!-- .summary -->
+        </div>
+        <!-- /.single-product-wrapper -->
+        <div class="product-form-wrapper">
+          
+              <div  class="yith_wapo_groups_container">
+               
+                 
+                 <h2 class="group-name">SELECIONE SEUS ADICIONAIS</h2>
+                 <div class="yith_wapo_groups_container_wrap">
+                    
+                    <div class="ywapo_group_container ywapo_group_container_checkbox form-row form-row-wide">
+                       <h3><span>Selecione</span></h3>
+                       <p>Enter your name and choose your pizza toppings</p>
+                        <form method='post'>
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <a class="button alt" href="{{ object.get_add_to_cart_url }}">ADICIONAR</a>
+                        </form>
+                        {% for p in object.item.picked %}
+                            
+                            <p>{{ p.picked }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="ywapo_group_container ywapo_group_container_checkbox form-row form-row-wide">
+                    <div class="ywapo_input_container ywapo_input_container_checkbox">
+                 </div>
+           </form>
+        </div>
+
+     </div>
+</div>
+</div>
+{% endblock %}
