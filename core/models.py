@@ -9,9 +9,9 @@ from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
 import os
 from datetime import datetime
-import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
+# import sys
+# reload(sys)
+# sys.setdefaultencoding('utf8')
 
 
 CATEGORY_CHOICES = (
@@ -25,6 +25,7 @@ ADDRESS_CHOICES = (
     ('S', 'Shipping'),
 )
 
+
 class UserProfile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -34,16 +35,16 @@ class UserProfile(models.Model):
     def __str__(self):
         return str(self.user.username)
 
+
 class Tamanho(models.Model):
     nome = models.CharField(u'Tamanho', max_length=40)
 
     def __unicode__(self):
         return self.nome
+
     class Meta:
         verbose_name = u'Tamanho'
         verbose_name_plural = u'TAMANHOS'
-
-
 
 
 class Categoria(models.Model):
@@ -54,30 +55,36 @@ class Categoria(models.Model):
 
     def __unicode__(self):
         return self.nome
+
     class Meta:
         verbose_name = u'Uma Categoria'
         verbose_name_plural = u'CATEGORIAS'
         ordering = ['id']
 
+
 class Adicional(models.Model):
-    adicional_nome =  models.CharField(max_length=255, blank=True, null=True)
-    
+    adicional_nome = models.CharField(max_length=255, blank=True, null=True)
+
     def __unicode__(self):
         return self.adicional_nome
+
 
 class Item(models.Model):
     title = models.CharField(max_length=100)
     price = models.DecimalField(u'Valor', max_digits=8, decimal_places=2)
-    discount_price = models.DecimalField(blank=True, null=True, max_digits=8, decimal_places=2)
-    ativacao = models.BooleanField(u'Ativar/Desativar',default=True)
+    discount_price = models.DecimalField(
+        blank=True, null=True, max_digits=8, decimal_places=2)
+    ativacao = models.BooleanField(u'Ativar/Desativar', default=True)
     slug = models.SlugField(null=True, default=None, max_length=300,
-    unique=True, db_index=True)
-    description = RichTextUploadingField(u'Descrição', blank=True) 
-    image = models.ImageField(blank=True, null=True, upload_to='uploaded_images')
+                            unique=True, db_index=True)
+    description = RichTextUploadingField(u'Descrição', blank=True)
+    image = models.ImageField(blank=True, null=True,
+                              upload_to='uploaded_images')
     tamanho = models.ForeignKey(Tamanho, on_delete=models.CASCADE)
     produtos = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     #adicional = models.ForeignKey(Adicional, on_delete=models.CASCADE, blank=True, null=True)
-    picked = models.ManyToManyField(Adicional, blank=True, related_name='add_adicional')
+    picked = models.ManyToManyField(
+        Adicional, blank=True, related_name='add_adicional')
 
     def __str__(self):
         return str(self.title)
@@ -110,7 +117,7 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(default=1)
 
     def __str__(self):
-        return "({0},{1})".format(self.quantity,self.item.title)
+        return "({0},{1})".format(self.quantity, self.item.title)
 
     def get_total_item_price(self):
         return self.quantity * self.item.price
@@ -134,7 +141,8 @@ class OrderItem(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
-    ref_code = models.CharField(u'Código de referência', max_length=20, blank=True, null=True)
+    ref_code = models.CharField(
+        u'Código de referência', max_length=20, blank=True, null=True)
     items = models.ManyToManyField(OrderItem)
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField()
@@ -142,9 +150,9 @@ class Order(models.Model):
     being_delivered = models.BooleanField(u'Saiu para Entrega', default=False)
     received = models.BooleanField(u'Entregue', default=False)
     refund_granted = models.BooleanField(u'Pagamento Efetuado', default=False)
-    refund_requested = models.BooleanField(u'Pagamento Cancelado', default=False)
-    
-    
+    refund_requested = models.BooleanField(
+        u'Pagamento Cancelado', default=False)
+
     shipping_address = models.ForeignKey(
         'Address', related_name='shipping_address', on_delete=models.SET_NULL, blank=True, null=True)
     billing_address = models.ForeignKey(
@@ -153,7 +161,6 @@ class Order(models.Model):
         'Payment', related_name='billing_pagamento', on_delete=models.SET_NULL, blank=True, null=True)
     coupon = models.ForeignKey(
         'Coupon', on_delete=models.SET_NULL, blank=True, null=True)
-
 
     '''
     1. Item added to cart
@@ -214,6 +221,7 @@ class Payment(models.Model):
         verbose_name = u'Um Pagamento'
         verbose_name_plural = u'PAGAMENTO'
 
+
 class Coupon(models.Model):
     code = models.CharField(max_length=15)
     amount = models.FloatField()
@@ -224,6 +232,7 @@ class Coupon(models.Model):
     class Meta:
         verbose_name = u'Um Cupom'
         verbose_name_plural = u'CUPOM'
+
 
 class Refund(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
@@ -238,10 +247,9 @@ class Refund(models.Model):
         verbose_name = u'Um Reembolso'
         verbose_name_plural = u'REEMBOLSO'
 
+
 def userprofile_receiver(sender, instance, created, *args, **kwargs):
     if created:
-        userprofile = UserProfile.objects.create(user=instance)        
+        userprofile = UserProfile.objects.create(user=instance)
 
 post_save.connect(userprofile_receiver, sender=settings.AUTH_USER_MODEL)
-
-        
